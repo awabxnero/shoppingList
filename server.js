@@ -1,14 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const path = require("path");
 const items = require("./routes/api/items.js");
-
+const users = require("./routes/api/users.js");
 //initialize express
 const app = express();
 
 //body parser middleware to access the bodies if requests
-app.use(bodyParser.json());
+app.use(express.json());
 
 //configure Database
 const db = require("./config/keys.js").mongoURI;
@@ -16,13 +15,15 @@ const db = require("./config/keys.js").mongoURI;
 //connnect to database mongodb
 mongoose
   .connect(db, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
   })
   .then(() => console.log("connected to database MongoDB"))
   .catch(err => console.log(err));
 
 //use routes
 app.use("/api/items", items);
+app.use("/api/users", users);
 
 //serve static assets in production
 if (process.env.NODE_ENV === "production") {
