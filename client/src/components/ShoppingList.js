@@ -45,6 +45,7 @@ class ShoppingList extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   item: state.item,
   isAuthenticated: state.auth.isAuthenticated
